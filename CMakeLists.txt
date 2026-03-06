@@ -50,6 +50,7 @@ add_executable(archaeologist_tests
     tests/basic_test.cpp
     tests/build_test.cpp
     tests/directory_scanner_test.cpp
+    tests/directory_scanner_list_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 
