@@ -12,7 +12,6 @@ sys.path.insert(0, build_python)
 
 import archaeologist_py
 
-
 class ArchaeologistUI:
 
     def __init__(self, root):
@@ -20,24 +19,35 @@ class ArchaeologistUI:
         self.root = root
         self.root.title("The Archaeologist")
 
-        # MATRIX STYLE
+        # estilo matrix
         self.root.configure(bg="black")
 
+        # fullscreen inicial
+        self.root.attributes("-fullscreen", True)
+
+        # atalhos
+        self.root.bind("<F11>", self.toggle_fullscreen)
+        self.root.bind("<Escape>", self.exit_fullscreen)
+
+        # container principal
+        frame = tk.Frame(root, bg="black")
+        frame.pack(fill=tk.BOTH, expand=True)
+
+        # terminal
         self.text = ScrolledText(
-            root,
-            width=110,
-            height=40,
+            frame,
             bg="black",
             fg="#00FF41",
             insertbackground="#00FF41",
-            font=("Courier New", 11),
+            font=("Courier New", 12),
             borderwidth=0
         )
 
-        self.text.pack(padx=10, pady=10)
+        self.text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
+        # botão
         run_btn = tk.Button(
-            root,
+            frame,
             text="RUN SCANNER",
             command=self.run_scanner,
             bg="black",
@@ -50,6 +60,15 @@ class ArchaeologistUI:
         )
 
         run_btn.pack(pady=5)
+
+    def toggle_fullscreen(self, event=None):
+
+        state = self.root.attributes("-fullscreen")
+        self.root.attributes("-fullscreen", not state)
+
+    def exit_fullscreen(self, event=None):
+
+        self.root.attributes("-fullscreen", False)
 
     def run_scanner(self):
 
