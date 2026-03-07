@@ -22,6 +22,19 @@ set(ARCHAEOLOGIST_SOURCES
 )
 
 # ----------------------------
+# pybind11
+# ----------------------------
+include(FetchContent)
+
+FetchContent_Declare(
+  pybind11
+  GIT_REPOSITORY https://github.com/pybind/pybind11.git
+  GIT_TAG v2.12.0
+)
+
+FetchContent_MakeAvailable(pybind11)
+
+# ----------------------------
 # main executable
 # ----------------------------
 add_executable(the_archaeologist
@@ -31,6 +44,24 @@ add_executable(the_archaeologist
 
 target_include_directories(the_archaeologist
     PRIVATE include
+)
+
+# ----------------------------
+# python bindings
+# ----------------------------
+pybind11_add_module(archaeologist_py
+    bindings/python_module.cpp
+    ${ARCHAEOLOGIST_SOURCES}
+)
+
+target_include_directories(archaeologist_py
+    PRIVATE include
+)
+
+# coloca o módulo python dentro de build/python
+set_target_properties(archaeologist_py
+    PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/python
 )
 
 # ----------------------------
