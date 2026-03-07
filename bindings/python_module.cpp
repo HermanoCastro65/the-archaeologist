@@ -1,7 +1,6 @@
 #include <pybind11/iostream.h>
 #include <pybind11/pybind11.h>
 
-
 #include "archaeologist/runner/self_runner.h"
 
 namespace py = pybind11;
