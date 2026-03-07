@@ -14,7 +14,8 @@ void SelfRunner::run() {
 
   auto files = scanner.scan(".");
 
-  scanner.list(files);
+  // scanner.list(files);
+  scanner.tree(files);
 }
 
 } // namespace archaeologist
