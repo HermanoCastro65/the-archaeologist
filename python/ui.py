@@ -20,11 +20,36 @@ class ArchaeologistUI:
         self.root = root
         self.root.title("The Archaeologist")
 
-        self.text = ScrolledText(root, width=100, height=40)
+        # MATRIX STYLE
+        self.root.configure(bg="black")
+
+        self.text = ScrolledText(
+            root,
+            width=110,
+            height=40,
+            bg="black",
+            fg="#00FF41",
+            insertbackground="#00FF41",
+            font=("Courier New", 11),
+            borderwidth=0
+        )
+
         self.text.pack(padx=10, pady=10)
 
-        run_btn = tk.Button(root, text="Run Scanner", command=self.run_scanner)
-        run_btn.pack()
+        run_btn = tk.Button(
+            root,
+            text="RUN SCANNER",
+            command=self.run_scanner,
+            bg="black",
+            fg="#00FF41",
+            activebackground="black",
+            activeforeground="#00FF41",
+            font=("Courier New", 12, "bold"),
+            highlightthickness=1,
+            highlightbackground="#00FF41"
+        )
+
+        run_btn.pack(pady=5)
 
     def run_scanner(self):
 
@@ -32,7 +57,6 @@ class ArchaeologistUI:
 
         runner = archaeologist_py.SelfRunner()
 
-        # capturar output
         import io
         import contextlib
 
