@@ -40,25 +40,46 @@ void DirectoryScanner::list(const std::vector<std::filesystem::path> &files) {
   }
 }
 
+struct TreeNode {
+  std::map<std::string, std::unique_ptr<TreeNode>> children;
+};
+
+static void print_tree(const TreeNode &node, const std::string &prefix, bool is_last) {
+  for (auto it = node.children.begin(); it != node.children.end(); ++it) {
+    bool last = std::next(it) == node.children.end();
+
+    std::cout << prefix;
+    std::cout << (last ? "`-- " : "|-- ");
+    std::cout << it->first << "\n";
+
+    std::string new_prefix = prefix + (last ? "    " : "|   ");
+
+    print_tree(*it->second, new_prefix, last);
+  }
+}
+
 void DirectoryScanner::tree(const std::vector<std::filesystem::path> &files) {
+  TreeNode root;
 
-  std::map<std::filesystem::path, std::set<std::filesystem::path>> tree;
+  for (const auto &path : files) {
+    auto relative = std::filesystem::relative(path, ".");
 
-  for (const auto &file : files) {
-    auto parent = file.parent_path();
-    tree[parent].insert(file.filename());
-  }
+    TreeNode *node = &root;
 
-  for (const auto &[dir, children] : tree) {
+    for (const auto &part : relative) {
+      std::string name = part.string();
 
-    std::cout << dir.string() << "\n";
+      if (!node->children.count(name)) {
+        node->children[name] = std::make_unique<TreeNode>();
+      }
 
-    for (const auto &child : children) {
-      std::cout << "  └── " << child.string() << "\n";
+      node = node->children[name].get();
     }
-
-    std::cout << "\n";
   }
+
+  std::cout << ".\n";
+
+  print_tree(root, "", true);
 }
 
 } // namespace archaeologist
