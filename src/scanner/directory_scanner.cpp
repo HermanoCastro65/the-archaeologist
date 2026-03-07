@@ -8,10 +8,24 @@ std::vector<std::filesystem::path> DirectoryScanner::scan(const std::filesystem:
 
   std::vector<std::filesystem::path> files;
 
-  for (const auto &entry : std::filesystem::recursive_directory_iterator(root)) {
+  for (auto it = std::filesystem::recursive_directory_iterator(root);
+       it != std::filesystem::recursive_directory_iterator(); ++it) {
+
+    const auto &entry = *it;
+    auto path = entry.path();
+
+    if (entry.is_directory()) {
+
+      std::string name = path.filename().string();
+
+      if (name == ".git" || name == "build") {
+        it.disable_recursion_pending();
+        continue;
+      }
+    }
 
     if (entry.is_regular_file()) {
-      files.push_back(entry.path());
+      files.push_back(path);
     }
   }
 
