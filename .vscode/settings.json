@@ -6,5 +6,11 @@
         "${workspaceFolder}/build/python"
     ],
     "python.analysis.autoImportCompletions": true,
-    "python.analysis.diagnosticMode": "workspace"
+    "python.analysis.diagnosticMode": "workspace",
+    "files.exclude": {
+        "**/build/_deps": true
+    },
+    "python.analysis.exclude": [
+        "**/build/_deps"
+    ]
 }
