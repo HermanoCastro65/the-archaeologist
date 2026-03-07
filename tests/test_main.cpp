@@ -1,4 +1,4 @@
-#include "test_runner.h"
+#include "tests/test_runner.h"
 
 void basic_test();
 void build_artifact_test();
