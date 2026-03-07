@@ -3,7 +3,6 @@ import os
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 
-# localizar módulo compilado
 current_dir = os.path.dirname(__file__)
 project_root = os.path.abspath(os.path.join(current_dir, ".."))
 build_python = os.path.join(project_root, "build", "python")
@@ -22,18 +21,19 @@ class ArchaeologistUI:
         # estilo matrix
         self.root.configure(bg="black")
 
-        # fullscreen inicial
-        self.root.attributes("-fullscreen", True)
+        # tamanho inicial
+        self.root.geometry("1200x800")
+
+        # permitir redimensionamento
+        self.root.resizable(True, True)
 
         # atalhos
         self.root.bind("<F11>", self.toggle_fullscreen)
         self.root.bind("<Escape>", self.exit_fullscreen)
 
-        # container principal
         frame = tk.Frame(root, bg="black")
         frame.pack(fill=tk.BOTH, expand=True)
 
-        # terminal
         self.text = ScrolledText(
             frame,
             bg="black",
@@ -45,7 +45,6 @@ class ArchaeologistUI:
 
         self.text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        # botão
         run_btn = tk.Button(
             frame,
             text="RUN SCANNER",
@@ -62,12 +61,10 @@ class ArchaeologistUI:
         run_btn.pack(pady=5)
 
     def toggle_fullscreen(self, event=None):
-
         state = self.root.attributes("-fullscreen")
         self.root.attributes("-fullscreen", not state)
 
     def exit_fullscreen(self, event=None):
-
         self.root.attributes("-fullscreen", False)
 
     def run_scanner(self):
