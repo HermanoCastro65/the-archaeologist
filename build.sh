@@ -44,7 +44,7 @@ echo ""
 echo "Running Python interface..."
 echo "---------------------------------"
 
-python3 python/test.py
+python3 python/ui.py
 
 echo ""
 echo "Done."
