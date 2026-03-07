@@ -54,6 +54,7 @@ add_executable(archaeologist_tests
     tests/scanner/directory_scanner_list_test.cpp
     tests/scanner/directory_scanner_ignore_test.cpp
     tests/runner/self_runner_test.cpp
+    tests/scanner/directory_tree_list_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 
