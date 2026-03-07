@@ -35,13 +35,7 @@ echo ""
 echo "Tests passed!"
 
 echo ""
-echo "Running main application..."
-echo "---------------------------------"
-
-./$BUILD_DIR/the_archaeologist .
-
-echo ""
-echo "Running Python interface..."
+echo "Launching Python UI..."
 echo "---------------------------------"
 
 python3 python/ui.py
