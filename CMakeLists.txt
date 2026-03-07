@@ -48,12 +48,12 @@ enable_testing()
 
 add_executable(archaeologist_tests
     tests/test_main.cpp
-    tests/basic_test.cpp
-    tests/build_test.cpp
-    tests/directory_scanner_test.cpp
-    tests/directory_scanner_list_test.cpp
-    tests/self_runner_test.cpp
-    tests/directory_scanner_ignore_test.cpp
+    tests/_build/basic_test.cpp
+    tests/_build/build_test.cpp
+    tests/scanner/directory_scanner_test.cpp
+    tests/scanner/directory_scanner_list_test.cpp
+    tests/scanner/directory_scanner_ignore_test.cpp
+    tests/runner/self_runner_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 
