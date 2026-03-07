@@ -7,6 +7,7 @@ void directory_scanner_list_outputs_files();
 void self_runner_scans_project();
 void directory_scanner_ignores_build_and_git();
 void directory_scanner_tree_list();
+void project_report_generates_summary();
 
 int main() {
   run_test("basic_test", basic_test);
@@ -16,6 +17,7 @@ int main() {
   run_test("self_runner_scans_project", self_runner_scans_project);
   run_test("directory_scanner_ignores_build_and_git", directory_scanner_ignores_build_and_git);
   run_test("directory_scanner_tree_list", directory_scanner_tree_list);
+  run_test("project_report_generates_summary", project_report_generates_summary);
 
   print_summary();
 
