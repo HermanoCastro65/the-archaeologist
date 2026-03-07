@@ -41,4 +41,10 @@ echo "---------------------------------"
 ./$BUILD_DIR/the_archaeologist .
 
 echo ""
+echo "Running Python interface..."
+echo "---------------------------------"
+
+python3 python/test.py
+
+echo ""
 echo "Done."
