@@ -85,6 +85,10 @@ class ArchaeologistUI:
 
         self.text.insert(tk.END, output)
 
+        # auto scroll estilo terminal
+        self.text.see(tk.END)
+        self.root.update_idletasks()
+
 
 root = tk.Tk()
 
