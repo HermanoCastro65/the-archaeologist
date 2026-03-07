@@ -17,6 +17,7 @@ include_directories(include)
 # ----------------------------
 set(ARCHAEOLOGIST_SOURCES
     src/scanner/directory_scanner.cpp
+    src/runner/self_runner.cpp
 )
 
 # ----------------------------
@@ -51,6 +52,7 @@ add_executable(archaeologist_tests
     tests/build_test.cpp
     tests/directory_scanner_test.cpp
     tests/directory_scanner_list_test.cpp
+    tests/self_runner_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 
