@@ -1,4 +1,5 @@
 #include "archaeologist/runner/self_runner.h"
+#include "archaeologist/report/project_report.h"
 #include "archaeologist/scanner/directory_scanner.h"
 
 #include <iostream>
@@ -16,6 +17,10 @@ void SelfRunner::run() {
 
   // scanner.list(files);
   scanner.tree(files);
+
+  ProjectReport report;
+
+  report.generate(files);
 }
 
 } // namespace archaeologist
