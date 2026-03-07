@@ -6,16 +6,15 @@
 
 namespace archaeologist {
 
-void SelfRunner::run() {
+void SelfRunner::run(const std::string &path) {
 
   std::cout << "\nRunning Archaeologist self-runner...\n";
-  std::cout << "Scanning project: .\n\n";
+  std::cout << "Scanning project: " << path << "\n\n";
 
   DirectoryScanner scanner;
 
-  auto files = scanner.scan(".");
+  auto files = scanner.scan(path);
 
-  // scanner.list(files);
   scanner.tree(files);
 
   ProjectReport report;

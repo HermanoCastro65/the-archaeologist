@@ -2,6 +2,7 @@ import sys
 import os
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
+from tkinter import filedialog
 
 current_dir = os.path.dirname(__file__)
 project_root = os.path.abspath(os.path.join(current_dir, ".."))
@@ -41,10 +42,13 @@ class ArchaeologistUI:
 
         self.text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        run_btn = tk.Button(
-            frame,
-            text="RUN SCANNER",
-            command=self.run_scanner,
+        buttons = tk.Frame(frame, bg="black")
+        buttons.pack(pady=5)
+
+        self_btn = tk.Button(
+            buttons,
+            text="SELF RUNNER",
+            command=self.run_self,
             bg="black",
             fg="#00FF41",
             activebackground="black",
@@ -54,7 +58,22 @@ class ArchaeologistUI:
             highlightbackground="#00FF41"
         )
 
-        run_btn.pack(pady=5)
+        self_btn.pack(side=tk.LEFT, padx=5)
+
+        run_btn = tk.Button(
+            buttons,
+            text="RUN THE ARCHAEOLOGIST",
+            command=self.run_external,
+            bg="black",
+            fg="#00FF41",
+            activebackground="black",
+            activeforeground="#00FF41",
+            font=("Courier New", 12, "bold"),
+            highlightthickness=1,
+            highlightbackground="#00FF41"
+        )
+
+        run_btn.pack(side=tk.LEFT, padx=5)
 
     def toggle_fullscreen(self, event=None):
         state = self.root.attributes("-fullscreen")
@@ -73,7 +92,7 @@ class ArchaeologistUI:
 
         self.root.after(20, self.type_output, lines, index + 1)
 
-    def run_scanner(self):
+    def execute_runner(self, path):
 
         self.text.delete("1.0", tk.END)
 
@@ -85,12 +104,23 @@ class ArchaeologistUI:
         buffer = io.StringIO()
 
         with contextlib.redirect_stdout(buffer):
-            runner.run()
+            runner.run(path)
 
         output = buffer.getvalue()
         lines = output.splitlines()
 
         self.type_output(lines)
+
+    def run_self(self):
+
+        self.execute_runner(".")
+
+    def run_external(self):
+
+        path = filedialog.askdirectory()
+
+        if path:
+            self.execute_runner(path)
 
 
 root = tk.Tk()
