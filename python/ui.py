@@ -11,6 +11,7 @@ sys.path.insert(0, build_python)
 
 import archaeologist_py
 
+
 class ArchaeologistUI:
 
     def __init__(self, root):
@@ -18,16 +19,11 @@ class ArchaeologistUI:
         self.root = root
         self.root.title("The Archaeologist")
 
-        # estilo matrix
         self.root.configure(bg="black")
 
-        # tamanho inicial
         self.root.geometry("1200x800")
-
-        # permitir redimensionamento
         self.root.resizable(True, True)
 
-        # atalhos
         self.root.bind("<F11>", self.toggle_fullscreen)
         self.root.bind("<Escape>", self.exit_fullscreen)
 
@@ -67,6 +63,16 @@ class ArchaeologistUI:
     def exit_fullscreen(self, event=None):
         self.root.attributes("-fullscreen", False)
 
+    def type_output(self, lines, index=0):
+
+        if index >= len(lines):
+            return
+
+        self.text.insert(tk.END, lines[index] + "\n")
+        self.text.see(tk.END)
+
+        self.root.after(20, self.type_output, lines, index + 1)
+
     def run_scanner(self):
 
         self.text.delete("1.0", tk.END)
@@ -82,12 +88,9 @@ class ArchaeologistUI:
             runner.run()
 
         output = buffer.getvalue()
+        lines = output.splitlines()
 
-        self.text.insert(tk.END, output)
-
-        # auto scroll estilo terminal
-        self.text.see(tk.END)
-        self.root.update_idletasks()
+        self.type_output(lines)
 
 
 root = tk.Tk()
