@@ -90,7 +90,7 @@ class ArchaeologistUI:
         self.text.insert(tk.END, lines[index] + "\n")
         self.text.see(tk.END)
 
-        self.root.after(20, self.type_output, lines, index + 1)
+        self.root.after(1, self.type_output, lines, index + 1)
 
     def execute_runner(self, path):
 
