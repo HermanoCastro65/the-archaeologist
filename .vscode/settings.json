@@ -24,5 +24,12 @@
         "**/build/_deps/**": true
     },
     "python.defaultInterpreterPath": "python",
-    "python.terminal.activateEnvironment": false
+    "python.terminal.activateEnvironment": false,
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    }
 }
