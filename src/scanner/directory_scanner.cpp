@@ -44,7 +44,9 @@ struct TreeNode {
   std::map<std::string, std::unique_ptr<TreeNode>> children;
 };
 
-static void print_tree(const TreeNode &node, const std::string &prefix, bool is_last) {
+static void print_tree(const TreeNode &node, const std::string &prefix,
+                       [[maybe_unused]] bool is_last) {
+
   for (auto it = node.children.begin(); it != node.children.end(); ++it) {
     bool last = std::next(it) == node.children.end();
 
