@@ -6,7 +6,6 @@
 #include <iostream>
 #include <thread>
 
-
 namespace archaeologist {
 
 std::filesystem::path RepoScanner::clone(const std::string &url) {
@@ -15,8 +14,6 @@ std::filesystem::path RepoScanner::clone(const std::string &url) {
               ("archaeologist_repo_" + std::to_string(std::time(nullptr)));
 
   std::string command = "git clone --depth 1 --filter=blob:none " + url + " " + temp.string();
-
-  std::cout << "Cloning repository...\n";
 
   int result = std::system(command.c_str());
 
