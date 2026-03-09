@@ -1,8 +1,11 @@
 #include "archaeologist/config/ignore_config.h"
+#include "third_party/nlohmann/json.hpp"
 
 #include <fstream>
 
 namespace archaeologist {
+
+using json = nlohmann::json;
 
 void IgnoreConfig::load(const std::string &path) {
 
@@ -11,21 +14,19 @@ void IgnoreConfig::load(const std::string &path) {
   if (!file)
     return;
 
-  std::string line;
+  json data;
+  file >> data;
 
-  while (std::getline(file, line)) {
+  if (data.contains("directories")) {
+    for (const auto &dir : data["directories"]) {
+      directories.insert(dir.get<std::string>());
+    }
+  }
 
-    if (line.find(".git") != std::string::npos)
-      directories.insert(".git");
-
-    if (line.find("build") != std::string::npos)
-      directories.insert("build");
-
-    if (line.find(".ruff_cache") != std::string::npos)
-      directories.insert(".ruff_cache");
-
-    if (line.find(".pyc") != std::string::npos)
-      extensions.insert(".pyc");
+  if (data.contains("extensions")) {
+    for (const auto &ext : data["extensions"]) {
+      extensions.insert(ext.get<std::string>());
+    }
   }
 }
 
