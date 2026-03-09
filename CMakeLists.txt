@@ -21,6 +21,7 @@ set(ARCHAEOLOGIST_SOURCES
     src/report/project_report.cpp
     src/config/ignore_config.cpp
     src/git/repo_scanner.cpp
+    src/report/git_repository_report.cpp
 )
 
 # ----------------------------
@@ -82,6 +83,7 @@ add_executable(archaeologist_tests
     tests/report/project_report_test.cpp
     tests/scanner/scanner_ignore_config_test.cpp
     tests/git/git_repo_test.cpp
+    tests/git/git_repository_report_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 

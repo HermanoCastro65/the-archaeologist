@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "archaeologist/git/repo_scanner.h"
+#include "archaeologist/report/git_repository_report.h"
 #include "archaeologist/report/project_report.h"
 #include "archaeologist/scanner/directory_scanner.h"
 
@@ -34,6 +35,15 @@ void SelfRunner::run(const std::string &input) {
   DirectoryScanner scanner;
 
   auto files = scanner.scan(scan_path);
+
+  if (is_git_url(input)) {
+
+    GitRepositoryReport git_report;
+
+    auto summary = git_report.analyze(files);
+
+    git_report.print(summary);
+  }
 
   scanner.tree(files);
 
