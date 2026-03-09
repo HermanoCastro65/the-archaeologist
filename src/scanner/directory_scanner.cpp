@@ -39,9 +39,9 @@ std::vector<std::filesystem::path> DirectoryScanner::scan(const std::filesystem:
 
       files.push_back(path);
     }
-
-    return files;
   }
+
+  return files;
 }
 
 void DirectoryScanner::list(const std::vector<std::filesystem::path> &files) {
