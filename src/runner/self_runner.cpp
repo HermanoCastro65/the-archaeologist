@@ -17,6 +17,9 @@ static bool is_git_url(const std::string &path) {
 
 void SelfRunner::run(const std::string &input) {
 
+  std::cout << "Running The Archaeologist\n";
+  std::cout << "Target: " << input << "\n\n";
+
   std::filesystem::path scan_path = input;
   std::filesystem::path temp_repo;
 
