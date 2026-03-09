@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "archaeologist/git/repo_scanner.h"
+#include "archaeologist/report/project_report.h"
 #include "archaeologist/scanner/directory_scanner.h"
 
 namespace archaeologist {
@@ -32,6 +33,9 @@ void SelfRunner::run(const std::string &input) {
   auto files = scanner.scan(scan_path);
 
   scanner.tree(files);
+
+  ProjectReport report;
+  report.generate(files);
 
   if (!temp_repo.empty()) {
     RepoScanner::cleanup(temp_repo);
