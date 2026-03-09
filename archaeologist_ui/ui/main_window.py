@@ -42,7 +42,7 @@ class MainWindow:
         repo_btn = create_button(buttons, "SCAN GIT REPOSITORY", self.show_repo_input)
         repo_btn.pack(side=tk.LEFT, padx=5)
 
-        # repo input frame (hidden initially)
+        # repo input frame
         self.repo_frame = tk.Frame(frame, bg=BG_COLOR)
 
         self.repo_label = tk.Label(
@@ -108,16 +108,12 @@ class MainWindow:
 
     def run_repo_scan(self, event=None):
 
-        repo_url = self.repo_entry.get()
+        repo_url = self.repo_entry.get().strip()
 
-        # esconder campo de entrada
+        if not repo_url:
+            return
+
         self.repo_frame.pack_forget()
-
         self.repo_entry.delete(0, tk.END)
 
-        self.terminal.delete("1.0", tk.END)
-
-        self.terminal.insert(tk.END, f"Scanning repository:\n{repo_url}\n\n")
-
-        # placeholder até implementar a funcionalidade real
-        self.terminal.insert(tk.END, "Git repository scanning not implemented yet.\n")
+        self.execute_runner(repo_url)
