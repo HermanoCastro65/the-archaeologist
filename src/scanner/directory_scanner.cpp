@@ -2,9 +2,11 @@
 
 #include <iostream>
 #include <map>
-#include <set>
+#include <memory>
 
 namespace archaeologist {
+
+DirectoryScanner::DirectoryScanner() { ignore.load("config/scanner_ignore.json"); }
 
 std::vector<std::filesystem::path> DirectoryScanner::scan(const std::filesystem::path &root) {
 
@@ -20,13 +22,19 @@ std::vector<std::filesystem::path> DirectoryScanner::scan(const std::filesystem:
 
       std::string name = path.filename().string();
 
-      if (name == ".git" || name == "build") {
+      if (ignore.directories.count(name)) {
         it.disable_recursion_pending();
         continue;
       }
     }
 
     if (entry.is_regular_file()) {
+
+      std::string ext = path.extension().string();
+
+      if (ignore.extensions.count(ext))
+        continue;
+
       files.push_back(path);
     }
   }
@@ -44,10 +52,10 @@ struct TreeNode {
   std::map<std::string, std::unique_ptr<TreeNode>> children;
 };
 
-static void print_tree(const TreeNode &node, const std::string &prefix,
-                       [[maybe_unused]] bool is_last) {
+static void print_tree(const TreeNode &node, const std::string &prefix) {
 
   for (auto it = node.children.begin(); it != node.children.end(); ++it) {
+
     bool last = std::next(it) == node.children.end();
 
     std::cout << prefix;
@@ -56,19 +64,22 @@ static void print_tree(const TreeNode &node, const std::string &prefix,
 
     std::string new_prefix = prefix + (last ? "    " : "|   ");
 
-    print_tree(*it->second, new_prefix, last);
+    print_tree(*it->second, new_prefix);
   }
 }
 
 void DirectoryScanner::tree(const std::vector<std::filesystem::path> &files) {
+
   TreeNode root;
 
   for (const auto &path : files) {
-    auto relative = std::filesystem::relative(path, ".");
+
+    auto relative = std::filesystem::relative(path, std::filesystem::current_path());
 
     TreeNode *node = &root;
 
     for (const auto &part : relative) {
+
       std::string name = part.string();
 
       if (!node->children.count(name)) {
@@ -81,7 +92,7 @@ void DirectoryScanner::tree(const std::vector<std::filesystem::path> &files) {
 
   std::cout << ".\n";
 
-  print_tree(root, "", true);
+  print_tree(root, "");
 }
 
 } // namespace archaeologist

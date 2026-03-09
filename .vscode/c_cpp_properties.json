@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Win64",
+            "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+            "intelliSenseMode": "windows-gcc-x64",
+            "cppStandard": "c++20",
+            "cStandard": "c17",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/include/third_party",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+        }
+    ],
+    "version": 4
+}

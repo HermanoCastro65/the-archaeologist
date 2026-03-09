@@ -8,6 +8,7 @@ void self_runner_scans_project();
 void directory_scanner_ignores_build_and_git();
 void directory_scanner_tree_list();
 void project_report_generates_summary();
+void scanner_respects_ignore_config();
 
 int main() {
   run_test("basic_test", basic_test);
@@ -18,6 +19,7 @@ int main() {
   run_test("directory_scanner_ignores_build_and_git", directory_scanner_ignores_build_and_git);
   run_test("directory_scanner_tree_list", directory_scanner_tree_list);
   run_test("project_report_generates_summary", project_report_generates_summary);
+  run_test("scanner_respects_ignore_config", scanner_respects_ignore_config);
 
   print_summary();
 

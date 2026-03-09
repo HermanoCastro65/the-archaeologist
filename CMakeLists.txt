@@ -19,6 +19,7 @@ set(ARCHAEOLOGIST_SOURCES
     src/scanner/directory_scanner.cpp
     src/runner/self_runner.cpp
     src/report/project_report.cpp
+    src/config/ignore_config.cpp
 )
 
 # ----------------------------
@@ -78,6 +79,7 @@ add_executable(archaeologist_tests
     tests/runner/self_runner_test.cpp
     tests/scanner/directory_tree_list_test.cpp
     tests/report/project_report_test.cpp
+    tests/scanner/scanner_ignore_config_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 
