@@ -1,8 +1,17 @@
-from utils.paths import setup_cpp_module
+import sys
+import os
 
-setup_cpp_module()
+current_dir = os.path.dirname(__file__)
 
-import archaeologist_py
+project_root = os.path.abspath(
+    os.path.join(current_dir, "../../")
+)
+
+python_module_dir = os.path.join(project_root, "build", "python")
+
+sys.path.insert(0, python_module_dir)
+
+import archaeologist_py  # type: ignore
 
 
 class ArchaeologistRunner:
@@ -10,4 +19,5 @@ class ArchaeologistRunner:
     def run(self, path):
 
         runner = archaeologist_py.SelfRunner()
+
         runner.run(path)

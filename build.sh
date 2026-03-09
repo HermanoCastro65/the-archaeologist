@@ -14,22 +14,18 @@ rm -rf $BUILD_DIR
 
 echo ""
 echo "Configuring project with CMake..."
-cmake -S . -B $BUILD_DIR
+
+cmake -S . -B $BUILD_DIR -G "Ninja"
 
 echo ""
 echo "Building project..."
+
 cmake --build $BUILD_DIR
 
 echo ""
 echo "Running tests..."
 
-TEST_EXECUTABLES=$(find "$BUILD_DIR" -maxdepth 1 -type f -name "*test*" -o -name "*tests*" -o -name "*_tests*" 2>/dev/null)
-
-for test in $TEST_EXECUTABLES; do
-  if [[ -x "$test" ]]; then
-    "$test"
-  fi
-done
+$BUILD_DIR/archaeologist_tests
 
 echo ""
 echo "Tests passed!"
@@ -38,7 +34,7 @@ echo ""
 echo "Launching Python UI..."
 echo "---------------------------------"
 
-python3 python/ui.py
+python archaeologist_ui/main.py
 
 echo ""
 echo "Done."

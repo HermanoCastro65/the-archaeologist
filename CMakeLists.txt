@@ -10,7 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # ----------------------------
 # include directories
 # ----------------------------
-include_directories(include)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # ----------------------------
 # core source files
@@ -27,9 +27,9 @@ set(ARCHAEOLOGIST_SOURCES
 include(FetchContent)
 
 FetchContent_Declare(
-  pybind11
-  GIT_REPOSITORY https://github.com/pybind/pybind11.git
-  GIT_TAG v2.12.0
+    pybind11
+    GIT_REPOSITORY https://github.com/pybind/pybind11.git
+    GIT_TAG v2.12.0
 )
 
 FetchContent_MakeAvailable(pybind11)
@@ -43,7 +43,7 @@ add_executable(the_archaeologist
 )
 
 target_include_directories(the_archaeologist
-    PRIVATE include
+    PRIVATE ${PROJECT_SOURCE_DIR}/include
 )
 
 # ----------------------------
@@ -55,23 +55,13 @@ pybind11_add_module(archaeologist_py
 )
 
 target_include_directories(archaeologist_py
-    PRIVATE include
+    PRIVATE ${PROJECT_SOURCE_DIR}/include
 )
 
-# coloca o módulo python dentro de build/python
 set_target_properties(archaeologist_py
     PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/python
 )
-
-# ----------------------------
-# warnings
-# ----------------------------
-if (MSVC)
-    target_compile_options(the_archaeologist PRIVATE /W4)
-else()
-    target_compile_options(the_archaeologist PRIVATE -Wall -Wextra -Wpedantic)
-endif()
 
 # ----------------------------
 # tests
@@ -92,7 +82,24 @@ add_executable(archaeologist_tests
 )
 
 target_include_directories(archaeologist_tests
-    PRIVATE include
+    PRIVATE ${PROJECT_SOURCE_DIR}/include
 )
 
 add_test(NAME archaeologist_tests COMMAND archaeologist_tests)
+
+# ----------------------------
+# warnings
+# ----------------------------
+if (MSVC)
+
+    target_compile_options(the_archaeologist PRIVATE /W4)
+    target_compile_options(archaeologist_py PRIVATE /W4)
+    target_compile_options(archaeologist_tests PRIVATE /W4)
+
+else()
+
+    target_compile_options(the_archaeologist PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(archaeologist_py PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(archaeologist_tests PRIVATE -Wall -Wextra -Wpedantic)
+
+endif()
