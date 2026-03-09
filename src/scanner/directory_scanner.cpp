@@ -1,4 +1,5 @@
 #include "archaeologist/scanner/directory_scanner.h"
+#include "archaeologist/config/ignore_config.h"
 
 #include <iostream>
 #include <map>
@@ -10,6 +11,9 @@ std::vector<std::filesystem::path> DirectoryScanner::scan(const std::filesystem:
 
   std::vector<std::filesystem::path> files;
 
+  IgnoreConfig ignore;
+  ignore.load("config/scanner_ignore.json");
+
   for (auto it = std::filesystem::recursive_directory_iterator(root);
        it != std::filesystem::recursive_directory_iterator(); ++it) {
 
@@ -20,18 +24,24 @@ std::vector<std::filesystem::path> DirectoryScanner::scan(const std::filesystem:
 
       std::string name = path.filename().string();
 
-      if (name == ".git" || name == "build") {
+      if (ignore.directories.count(name)) {
         it.disable_recursion_pending();
         continue;
       }
     }
 
     if (entry.is_regular_file()) {
+
+      std::string ext = path.extension().string();
+
+      if (ignore.extensions.count(ext))
+        continue;
+
       files.push_back(path);
     }
-  }
 
-  return files;
+    return files;
+  }
 }
 
 void DirectoryScanner::list(const std::vector<std::filesystem::path> &files) {
