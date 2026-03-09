@@ -25,9 +25,11 @@ class MainWindow:
         frame = tk.Frame(root, bg=BG_COLOR)
         frame.pack(fill=tk.BOTH, expand=True)
 
+        # terminal
         self.terminal = Terminal(frame)
         self.terminal.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
+        # buttons
         buttons = tk.Frame(frame, bg=BG_COLOR)
         buttons.pack(pady=5)
 
@@ -36,6 +38,35 @@ class MainWindow:
 
         run_btn = create_button(buttons, "RUN THE ARCHAEOLOGIST", self.run_external)
         run_btn.pack(side=tk.LEFT, padx=5)
+
+        repo_btn = create_button(buttons, "SCAN GIT REPOSITORY", self.show_repo_input)
+        repo_btn.pack(side=tk.LEFT, padx=5)
+
+        # repo input frame (hidden initially)
+        self.repo_frame = tk.Frame(frame, bg=BG_COLOR)
+
+        self.repo_label = tk.Label(
+            self.repo_frame,
+            text="Repository URL:",
+            bg=BG_COLOR,
+            fg="#00FF41",
+            font=("Courier New", 12),
+        )
+
+        self.repo_label.pack(side=tk.LEFT, padx=5)
+
+        self.repo_entry = tk.Entry(
+            self.repo_frame,
+            width=80,
+            bg="black",
+            fg="#00FF41",
+            insertbackground="#00FF41",
+            font=("Courier New", 12),
+        )
+
+        self.repo_entry.pack(side=tk.LEFT, padx=5)
+
+        self.repo_entry.bind("<Return>", self.run_repo_scan)
 
     def toggle_fullscreen(self, event=None):
 
@@ -69,3 +100,19 @@ class MainWindow:
 
         if path:
             self.execute_runner(path)
+
+    def show_repo_input(self):
+
+        self.repo_frame.pack(pady=10)
+        self.repo_entry.focus()
+
+    def run_repo_scan(self, event=None):
+
+        repo_url = self.repo_entry.get()
+
+        self.terminal.delete("1.0", tk.END)
+
+        self.terminal.insert(tk.END, f"Scanning repository:\n{repo_url}\n\n")
+
+        # placeholder for future feature
+        self.terminal.insert(tk.END, "Git repository scanning not implemented yet.\n")
