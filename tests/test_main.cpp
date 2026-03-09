@@ -10,6 +10,7 @@ void directory_scanner_tree_list();
 void project_report_generates_summary();
 void scanner_respects_ignore_config();
 void git_repository_clone_and_cleanup();
+void git_repository_report_generates_summary();
 
 int main() {
   run_test("basic_test", basic_test);
@@ -22,6 +23,7 @@ int main() {
   run_test("project_report_generates_summary", project_report_generates_summary);
   run_test("scanner_respects_ignore_config", scanner_respects_ignore_config);
   run_test("git_repository_clone_and_cleanup", git_repository_clone_and_cleanup);
+  run_test("git_repository_report_generates_summary", git_repository_report_generates_summary);
 
   print_summary();
 
