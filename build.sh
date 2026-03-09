@@ -28,13 +28,12 @@ echo "Running tests..."
 $BUILD_DIR/archaeologist_tests
 
 echo ""
+echo "================================="
 echo "Tests passed!"
+echo "================================="
 
 echo ""
-echo "Launching Python UI..."
-echo "---------------------------------"
-
-python archaeologist_ui/main.py
-
+echo "Build and tests completed successfully."
+echo "Run the Python UI on the host machine:"
 echo ""
-echo "Done."
+echo "python archaeologist_ui/main.py"
