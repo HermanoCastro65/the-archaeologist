@@ -46,6 +46,29 @@ The Python UI communicates with the C++ engine through **pybind11 bindings**.
 
 # Running The Archaeologist
 
+## Docker Usage
+
+You can build and run the project inside Docker to ensure a clean environment for compilation and tests.
+
+Build the image:
+
+```bash
+docker build -t archaeologist-tests .
+```
+Run the container:
+```bash
+docker run --rm archaeologist-tests
+```
+Docker will:
+
+1. Build the C++ engine
+
+2. Run the test suite
+
+3. Validate the project in a clean Linux environment
+
+The Python UI should be run on the host machine.
+
 ## Build and launch the UI
 
 ```bash
@@ -75,58 +98,10 @@ Allows selecting any directory to scan.
 
 A project report and directory tree will appear in the terminal panel.
 
----
+*SCAN GIT REPO*
 
-# CLI Usage
+Scans a project directory or a remote Git repository
 
-You can also run the scanner directly from the command line:
-
-```bash
-./build/the_archaeologist <path>
-```
-Example:
-
-```bash
-./build/the_archaeologist .
-./build/the_archaeologist ../my_project
-```
----
-# Example Output
-
-```bash
-Running Archaeologist self-runner...
-Scanning project: .
-
-.
-|-- src
-|-- include
-|-- tests
-
-Project Report
-==============
-
-Total files: 27
-
-File types
-----------
-.cpp : 14
-.h   : 4
-.py  : 2
-.md  : 1
-```
----
-
-# Project Structure
-```bash
-the-archaeologist
-├── bindings
-├── include
-├── python
-├── src
-├── tests
-├── build.sh
-└── CMakeLists.txt
-```
 ---
 
 # Future Improvements
