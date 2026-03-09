@@ -1,17 +1,15 @@
+import contextlib
+import io
 import tkinter as tk
 from tkinter import filedialog
 
-from components.terminal import Terminal
 from components.buttons import create_button
-from styles.theme import BG_COLOR
+from components.terminal import Terminal
 from core.runner import ArchaeologistRunner
-
-import io
-import contextlib
+from styles.theme import BG_COLOR
 
 
 class MainWindow:
-
     def __init__(self, root):
 
         self.root = root

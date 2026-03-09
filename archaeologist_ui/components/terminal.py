@@ -1,19 +1,14 @@
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
+
 from styles.theme import BG_COLOR, FG_COLOR, FONT
 
 
 class Terminal(ScrolledText):
-
     def __init__(self, parent):
 
         super().__init__(
-            parent,
-            bg=BG_COLOR,
-            fg=FG_COLOR,
-            insertbackground=FG_COLOR,
-            font=FONT,
-            borderwidth=0
+            parent, bg=BG_COLOR, fg=FG_COLOR, insertbackground=FG_COLOR, font=FONT, borderwidth=0
         )
 
     def write_lines(self, root, lines, index=0):

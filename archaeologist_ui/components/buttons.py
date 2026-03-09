@@ -1,4 +1,5 @@
 import tkinter as tk
+
 from styles.theme import BG_COLOR, FG_COLOR, FONT_BOLD
 
 
@@ -14,5 +15,5 @@ def create_button(parent, text, command):
         activeforeground=FG_COLOR,
         font=FONT_BOLD,
         highlightthickness=1,
-        highlightbackground=FG_COLOR
+        highlightbackground=FG_COLOR,
     )
