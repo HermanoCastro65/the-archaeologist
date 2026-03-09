@@ -1,0 +1,10 @@
+{
+    "directories": [
+        ".git",
+        "build",
+        ".ruff_cache"
+    ],
+    "extensions": [
+        ".pyc"
+    ]
+}
