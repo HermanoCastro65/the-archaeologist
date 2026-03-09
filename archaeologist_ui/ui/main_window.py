@@ -110,9 +110,14 @@ class MainWindow:
 
         repo_url = self.repo_entry.get()
 
+        # esconder campo de entrada
+        self.repo_frame.pack_forget()
+
+        self.repo_entry.delete(0, tk.END)
+
         self.terminal.delete("1.0", tk.END)
 
         self.terminal.insert(tk.END, f"Scanning repository:\n{repo_url}\n\n")
 
-        # placeholder for future feature
+        # placeholder até implementar a funcionalidade real
         self.terminal.insert(tk.END, "Git repository scanning not implemented yet.\n")
