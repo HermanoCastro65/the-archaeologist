@@ -4,6 +4,7 @@
 #include <pybind11/pybind11.h>
 
 #include "archaeologist/runner/self_runner.h"
+#include "archaeologist/search/file_finder.h"
 
 namespace py = pybind11;
 
@@ -17,4 +18,9 @@ PYBIND11_MODULE(archaeologist_py, m) {
 
         runner.run(path);
       });
+
+  py::class_<archaeologist::FileFinder>(m, "FileFinder")
+      .def(py::init<>())
+      .def("find", &archaeologist::FileFinder::find)
+      .def("print_file_content", &archaeologist::FileFinder::print_file_content);
 }

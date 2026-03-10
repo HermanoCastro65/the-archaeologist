@@ -25,11 +25,9 @@ class MainWindow:
         frame = tk.Frame(root, bg=BG_COLOR)
         frame.pack(fill=tk.BOTH, expand=True)
 
-        # terminal
         self.terminal = Terminal(frame)
         self.terminal.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        # buttons
         buttons = tk.Frame(frame, bg=BG_COLOR)
         buttons.pack(pady=5)
 
@@ -42,7 +40,6 @@ class MainWindow:
         self.repo_btn = create_button(buttons, "SCAN GIT REPOSITORY", self.show_repo_input)
         self.repo_btn.pack(side=tk.LEFT, padx=5)
 
-        # repo input frame
         self.repo_frame = tk.Frame(frame, bg=BG_COLOR)
 
         self.repo_label = tk.Label(
@@ -65,8 +62,31 @@ class MainWindow:
         )
 
         self.repo_entry.pack(side=tk.LEFT, padx=5)
-
         self.repo_entry.bind("<Return>", self.run_repo_scan)
+
+        self.search_frame = tk.Frame(frame, bg=BG_COLOR)
+
+        self.search_label = tk.Label(
+            self.search_frame,
+            text="Search file:",
+            bg=BG_COLOR,
+            fg="#00FF41",
+            font=("Courier New", 12),
+        )
+
+        self.search_label.pack(side=tk.LEFT, padx=5)
+
+        self.search_entry = tk.Entry(
+            self.search_frame,
+            width=40,
+            bg="black",
+            fg="#00FF41",
+            insertbackground="#00FF41",
+            font=("Courier New", 12),
+        )
+
+        self.search_entry.pack(side=tk.LEFT, padx=5)
+        self.search_entry.bind("<Return>", self.search_file)
 
     def toggle_fullscreen(self, event=None):
 
@@ -90,7 +110,13 @@ class MainWindow:
 
         lines = buffer.getvalue().splitlines()
 
-        self.terminal.write_lines(self.root, lines, self.enable_buttons)
+        def on_finish():
+
+            self.enable_buttons()
+            self.search_frame.pack(pady=10)
+            self.search_entry.focus()
+
+        self.terminal.write_lines(self.root, lines, on_finish)
 
     def run_self(self):
 
@@ -119,6 +145,22 @@ class MainWindow:
         self.repo_entry.delete(0, tk.END)
 
         self.execute_runner(repo_url)
+
+    def search_file(self, event=None):
+
+        filename = self.search_entry.get().strip()
+
+        if not filename:
+            return
+
+        buffer = io.StringIO()
+
+        with contextlib.redirect_stdout(buffer):
+            self.runner.search_file(filename)
+
+        lines = buffer.getvalue().splitlines()
+
+        self.terminal.write_lines(self.root, lines)
 
     def disable_buttons(self):
 
