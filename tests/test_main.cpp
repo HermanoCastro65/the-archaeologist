@@ -1,5 +1,6 @@
 #include "tests/test_runner.h"
 
+// 17 tests
 void basic_test();
 void build_artifact_test();
 void directory_scanner_lists_files();
@@ -16,6 +17,7 @@ void repository_name_extracted_from_url();
 void invalid_git_repository_detection();
 void git_repository_validation();
 void file_finder_locates_file();
+void file_finder_prints_file_content();
 
 int main() {
   run_test("basic_test", basic_test);
@@ -34,6 +36,7 @@ int main() {
   run_test("invalid_git_repository_detection", invalid_git_repository_detection);
   run_test("git_repository_validation", git_repository_validation);
   run_test("file_finder_locates_file", file_finder_locates_file);
+  run_test("file_finder_prints_file_content", file_finder_prints_file_content);
 
   print_summary();
 
