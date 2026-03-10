@@ -11,12 +11,14 @@ class Terminal(ScrolledText):
             parent, bg=BG_COLOR, fg=FG_COLOR, insertbackground=FG_COLOR, font=FONT, borderwidth=0
         )
 
-    def write_lines(self, root, lines, index=0):
+    def write_lines(self, root, lines, on_complete=None, index=0):
 
         if index >= len(lines):
+            if on_complete:
+                on_complete()
             return
 
         self.insert(tk.END, lines[index] + "\n")
         self.see(tk.END)
 
-        root.after(1, self.write_lines, root, lines, index + 1)
+        root.after(1, self.write_lines, root, lines, on_complete, index + 1)

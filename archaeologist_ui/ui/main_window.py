@@ -33,14 +33,14 @@ class MainWindow:
         buttons = tk.Frame(frame, bg=BG_COLOR)
         buttons.pack(pady=5)
 
-        self_btn = create_button(buttons, "SELF RUNNER", self.run_self)
-        self_btn.pack(side=tk.LEFT, padx=5)
+        self.self_btn = create_button(buttons, "SELF RUNNER", self.run_self)
+        self.self_btn.pack(side=tk.LEFT, padx=5)
 
-        run_btn = create_button(buttons, "RUN THE ARCHAEOLOGIST", self.run_external)
-        run_btn.pack(side=tk.LEFT, padx=5)
+        self.run_btn = create_button(buttons, "RUN THE ARCHAEOLOGIST", self.run_external)
+        self.run_btn.pack(side=tk.LEFT, padx=5)
 
-        repo_btn = create_button(buttons, "SCAN GIT REPOSITORY", self.show_repo_input)
-        repo_btn.pack(side=tk.LEFT, padx=5)
+        self.repo_btn = create_button(buttons, "SCAN GIT REPOSITORY", self.show_repo_input)
+        self.repo_btn.pack(side=tk.LEFT, padx=5)
 
         # repo input frame
         self.repo_frame = tk.Frame(frame, bg=BG_COLOR)
@@ -79,6 +79,8 @@ class MainWindow:
 
     def execute_runner(self, path):
 
+        self.disable_buttons()
+
         self.terminal.delete("1.0", tk.END)
 
         buffer = io.StringIO()
@@ -88,7 +90,7 @@ class MainWindow:
 
         lines = buffer.getvalue().splitlines()
 
-        self.terminal.write_lines(self.root, lines)
+        self.terminal.write_lines(self.root, lines, self.enable_buttons)
 
     def run_self(self):
 
@@ -117,3 +119,15 @@ class MainWindow:
         self.repo_entry.delete(0, tk.END)
 
         self.execute_runner(repo_url)
+
+    def disable_buttons(self):
+
+        self.self_btn.config(state="disabled")
+        self.run_btn.config(state="disabled")
+        self.repo_btn.config(state="disabled")
+
+    def enable_buttons(self):
+
+        self.self_btn.config(state="normal")
+        self.run_btn.config(state="normal")
+        self.repo_btn.config(state="normal")
