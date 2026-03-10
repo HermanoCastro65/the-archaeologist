@@ -20,6 +20,32 @@ std::vector<std::filesystem::path> FileFinder::find(const std::vector<std::files
   return results;
 }
 
+void FileFinder::print_file_content(const std::filesystem::path &path,
+                                    const std::filesystem::path &root) {
+
+  std::ifstream file(path);
+
+  if (!file.is_open()) {
+    std::cout << "Unable to open file\n";
+    return;
+  }
+
+  std::filesystem::path relative = std::filesystem::relative(path, root);
+
+  std::cout << "\n========== FILE FOUND ==========\n";
+  std::cout << relative.string() << "\n";
+  std::cout << "================================\n";
+  std::cout << "---- FILE CONTENT ----\n";
+
+  std::string line;
+
+  while (std::getline(file, line)) {
+    std::cout << line << "\n";
+  }
+
+  std::cout << "----------------------\n";
+}
+
 void FileFinder::print_file_content(const std::filesystem::path &path) {
 
   std::ifstream file(path);
@@ -29,13 +55,18 @@ void FileFinder::print_file_content(const std::filesystem::path &path) {
     return;
   }
 
-  std::string line;
-
+  std::cout << "\n========== FILE FOUND ==========\n";
+  std::cout << path.string() << "\n";
+  std::cout << "================================\n";
   std::cout << "---- FILE CONTENT ----\n";
+
+  std::string line;
 
   while (std::getline(file, line)) {
     std::cout << line << "\n";
   }
+
+  std::cout << "----------------------\n";
 }
 
 } // namespace archaeologist

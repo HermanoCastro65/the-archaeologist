@@ -74,23 +74,19 @@ void SelfRunner::run(const std::string &input) {
 }
 
 void SelfRunner::find_file(const std::vector<std::filesystem::path> &files,
-                           const std::string &name) {
+                           const std::string &filename, const std::filesystem::path &root) {
 
   FileFinder finder;
 
-  auto results = finder.find(files, name);
+  auto results = finder.find(files, filename);
 
   if (results.empty()) {
-
     std::cout << "File not found\n";
     return;
   }
 
   for (const auto &path : results) {
-
-    std::cout << "\nFound: " << path << "\n\n";
-
-    finder.print_file_content(path);
+    finder.print_file_content(path, root);
   }
 }
 

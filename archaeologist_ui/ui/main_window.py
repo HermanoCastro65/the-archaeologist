@@ -99,7 +99,7 @@ class MainWindow:
 
     def execute_runner(self, path):
 
-        self.disable_buttons()
+        self.disable_ui()
 
         self.terminal.delete("1.0", tk.END)
 
@@ -112,7 +112,7 @@ class MainWindow:
 
         def on_finish():
 
-            self.enable_buttons()
+            self.enable_ui()
             self.search_frame.pack(pady=10)
             self.search_entry.focus()
 
@@ -131,6 +131,9 @@ class MainWindow:
 
     def show_repo_input(self):
 
+        if self.self_btn["state"] == "disabled":
+            return
+
         self.repo_frame.pack(pady=10)
         self.repo_entry.focus()
 
@@ -148,10 +151,15 @@ class MainWindow:
 
     def search_file(self, event=None):
 
+        if self.self_btn["state"] == "disabled":
+            return
+
         filename = self.search_entry.get().strip()
 
         if not filename:
             return
+
+        self.disable_ui()
 
         buffer = io.StringIO()
 
@@ -160,16 +168,21 @@ class MainWindow:
 
         lines = buffer.getvalue().splitlines()
 
-        self.terminal.write_lines(self.root, lines)
+        def on_finish():
+            self.enable_ui()
 
-    def disable_buttons(self):
+        self.terminal.write_lines(self.root, lines, on_finish)
+
+    def disable_ui(self):
 
         self.self_btn.config(state="disabled")
         self.run_btn.config(state="disabled")
         self.repo_btn.config(state="disabled")
+        self.search_entry.config(state="disabled")
 
-    def enable_buttons(self):
+    def enable_ui(self):
 
         self.self_btn.config(state="normal")
         self.run_btn.config(state="normal")
         self.repo_btn.config(state="normal")
+        self.search_entry.config(state="normal")
