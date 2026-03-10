@@ -1,0 +1,11 @@
+# The Archaeologist Docker Commands
+#
+# These commands can be copied and pasted directly into a terminal
+# on a machine with Docker installed.
+#
+# Example environment: Windows PowerShell
+
+docker build -f docker/Dockerfile.tests -t archaeologist-tests .
+docker run --rm archaeologist-tests
+docker build -f docker/Dockerfile.ui -t archaeologist-ui .
+docker run -it archaeologist-ui
