@@ -48,14 +48,20 @@ The Python UI communicates with the C++ engine through **pybind11 bindings**.
 
 ## Docker Usage
 
-You can build and run the project inside Docker to ensure a clean environment for compilation and tests.
+The Archaeologist provides two Docker environments.
+
+### 1. Build and Test Environment
+
+This container performs a clean build and runs the test suite.
 
 Build the image:
 
 ```bash
-docker build -t archaeologist-tests .
+docker build -f docker/Dockerfile.tests -t archaeologist-tests .
 ```
+
 Run the container:
+
 ```bash
 docker run --rm archaeologist-tests
 ```
@@ -67,20 +73,49 @@ Docker will:
 
 3. Validate the project in a clean Linux environment
 
-The Python UI should be run on the host machine.
 
-## Build and launch the UI
+### 2. Python UI Container (Headless)
+
+This container builds the C++ engine and runs the Python UI inside a virtual display.
+
+Build the image:
 
 ```bash
-chmod +x build.sh
-./build.sh
+docker build -f docker/Dockerfile.ui -t archaeologist-ui .
+```
+
+Run the container:
+
+```bash
+docker run -it archaeologist-ui
+```
+The UI runs inside a virtual display (Xvfb), so the Tkinter window will not appear on the host machine.
+This mode is mainly useful for containerized environments and CI testing.
+
+## Build and Launch the UI Locally
+
+You can build the project and run the UI directly on the host machine.
+
+Run the build script:
+
+```bash
+chmod +x scripts/build.sh
+./scripts/build.sh
 ```
 
 This will:
+
 1. Build the C++ engine
+
 2. Compile the Python bindings
+
 3. Run the test suite
-4. Launch the graphical interface
+
+After the build finishes, launch the Python UI:
+
+```bash
+python archaeologist_ui/main.py
+```
 
 ---
 
@@ -100,7 +135,7 @@ A project report and directory tree will appear in the terminal panel.
 
 *SCAN GIT REPO*
 
-Scans a project directory or a remote Git repository
+Scans a project directory or a remote Git repository.
 
 ---
 
