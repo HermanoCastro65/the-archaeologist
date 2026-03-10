@@ -90,6 +90,7 @@ add_executable(archaeologist_tests
     tests/git/git_invalid_repository_test.cpp
     tests/git/git_repository_validation_test.cpp
     tests/search/file_finder_test.cpp
+    tests/search/file_finder_print_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 
