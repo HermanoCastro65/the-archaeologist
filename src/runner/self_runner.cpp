@@ -45,6 +45,17 @@ void SelfRunner::run(const std::string &input) {
     git_report.print(summary);
   }
 
+  if (is_git_url(input)) {
+
+    std::string repo_name = RepoScanner::repository_name(input);
+
+    std::cout << repo_name << "\n";
+
+  } else {
+
+    std::cout << scan_path.filename().string() << "\n";
+  }
+
   scanner.tree(files, scan_path);
 
   ProjectReport report;

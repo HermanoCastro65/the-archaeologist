@@ -91,8 +91,6 @@ void DirectoryScanner::tree(const std::vector<std::filesystem::path> &files,
     }
   }
 
-  std::cout << root.filename().string() << "\n";
-
   print_tree(rootNode, "");
 }
 
