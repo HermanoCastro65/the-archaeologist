@@ -9,6 +9,7 @@ class RepoScanner {
 public:
   static std::filesystem::path clone(const std::string &url);
   static void cleanup(const std::filesystem::path &path);
+  static std::string repository_name(const std::string &url);
 };
 
 } // namespace archaeologist

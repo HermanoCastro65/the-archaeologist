@@ -68,15 +68,16 @@ static void print_tree(const TreeNode &node, const std::string &prefix) {
   }
 }
 
-void DirectoryScanner::tree(const std::vector<std::filesystem::path> &files) {
+void DirectoryScanner::tree(const std::vector<std::filesystem::path> &files,
+                            const std::filesystem::path &root) {
 
-  TreeNode root;
+  TreeNode rootNode;
 
   for (const auto &path : files) {
 
-    auto relative = std::filesystem::relative(path, std::filesystem::current_path());
+    auto relative = std::filesystem::relative(path, root);
 
-    TreeNode *node = &root;
+    TreeNode *node = &rootNode;
 
     for (const auto &part : relative) {
 
@@ -90,9 +91,7 @@ void DirectoryScanner::tree(const std::vector<std::filesystem::path> &files) {
     }
   }
 
-  std::cout << ".\n";
-
-  print_tree(root, "");
+  print_tree(rootNode, "");
 }
 
 } // namespace archaeologist

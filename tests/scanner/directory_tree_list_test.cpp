@@ -26,7 +26,7 @@ void directory_scanner_tree_list() {
   std::stringstream buffer;
   std::streambuf *old = std::cout.rdbuf(buffer.rdbuf());
 
-  scanner.tree(files);
+  scanner.tree(files, temp);
 
   std::cout.rdbuf(old);
 

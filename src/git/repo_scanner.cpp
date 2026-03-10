@@ -48,4 +48,20 @@ void RepoScanner::cleanup(const std::filesystem::path &path) {
   std::cerr << "Warning: temporary repository cleanup failed\n";
 }
 
+std::string RepoScanner::repository_name(const std::string &url) {
+
+  auto last_slash = url.find_last_of('/');
+
+  if (last_slash == std::string::npos)
+    return "repository";
+
+  std::string name = url.substr(last_slash + 1);
+
+  if (name.ends_with(".git")) {
+    name = name.substr(0, name.size() - 4);
+  }
+
+  return name;
+}
+
 } // namespace archaeologist
