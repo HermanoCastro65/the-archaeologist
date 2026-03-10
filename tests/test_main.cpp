@@ -14,6 +14,7 @@ void git_repository_report_generates_summary();
 void tree_starts_from_repository_root();
 void repository_name_extracted_from_url();
 void invalid_git_repository_detection();
+void git_repository_validation();
 
 int main() {
   run_test("basic_test", basic_test);
@@ -30,6 +31,7 @@ int main() {
   run_test("tree_starts_from_repository_root", tree_starts_from_repository_root);
   run_test("repository_name_extracted_from_url", repository_name_extracted_from_url);
   run_test("invalid_git_repository_detection", invalid_git_repository_detection);
+  run_test("git_repository_validation", git_repository_validation);
 
   print_summary();
 

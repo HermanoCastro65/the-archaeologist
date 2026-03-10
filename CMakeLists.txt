@@ -87,6 +87,7 @@ add_executable(archaeologist_tests
     tests/git/repo_tree_root_test.cpp
     tests/git/repository_name_test.cpp
     tests/git/git_invalid_repository_test.cpp
+    tests/git/git_repository_validation_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 
