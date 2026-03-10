@@ -31,6 +31,8 @@ void FileFinder::print_file_content(const std::filesystem::path &path) {
 
   std::string line;
 
+  std::cout << "---- FILE CONTENT ----\n";
+
   while (std::getline(file, line)) {
     std::cout << line << "\n";
   }
