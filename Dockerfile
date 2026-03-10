@@ -18,12 +18,16 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     curl \
+    sed \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY . .
 
+# Remove CRLF if files were created on Windows
+RUN sed -i 's/\r$//' build.sh
+
 RUN chmod +x build.sh
 
-CMD ["./build.sh"]
+CMD ["bash", "./build.sh"]
