@@ -83,7 +83,19 @@ bool RepoScanner::looks_like_git_repo(const std::string &url) {
 
 bool RepoScanner::repository_exists(const std::string &url) {
 
-  std::string command = "git ls-remote " + url + " >nul 2>&1";
+#ifdef _WIN32
+  std::string command = "git -c credential.helper= "
+                        "-c core.askpass= "
+                        "-c credential.interactive=false "
+                        "ls-remote " +
+                        url + " >nul 2>&1";
+#else
+  std::string command = "git -c credential.helper= "
+                        "-c core.askpass= "
+                        "-c credential.interactive=false "
+                        "ls-remote " +
+                        url + " >/dev/null 2>&1";
+#endif
 
   int result = std::system(command.c_str());
 
