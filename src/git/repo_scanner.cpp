@@ -81,4 +81,13 @@ bool RepoScanner::looks_like_git_repo(const std::string &url) {
   return true;
 }
 
+bool RepoScanner::repository_exists(const std::string &url) {
+
+  std::string command = "git ls-remote " + url + " >nul 2>&1";
+
+  int result = std::system(command.c_str());
+
+  return result == 0;
+}
+
 } // namespace archaeologist

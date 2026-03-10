@@ -11,6 +11,7 @@ public:
   static void cleanup(const std::filesystem::path &path);
   static std::string repository_name(const std::string &url);
   static bool looks_like_git_repo(const std::string &url);
+  static bool repository_exists(const std::string &url);
 };
 
 } // namespace archaeologist
