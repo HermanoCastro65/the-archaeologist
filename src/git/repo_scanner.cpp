@@ -64,4 +64,21 @@ std::string RepoScanner::repository_name(const std::string &url) {
   return name;
 }
 
+bool RepoScanner::looks_like_git_repo(const std::string &url) {
+
+  if (url.find("github.com") == std::string::npos && url.find("gitlab.com") == std::string::npos) {
+    return false;
+  }
+
+  auto parts = std::count(url.begin(), url.end(), '/');
+
+  if (parts < 4)
+    return false;
+
+  if (!url.ends_with(".git"))
+    return false;
+
+  return true;
+}
+
 } // namespace archaeologist

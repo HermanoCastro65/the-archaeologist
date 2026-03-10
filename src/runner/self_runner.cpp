@@ -26,6 +26,13 @@ void SelfRunner::run(const std::string &input) {
 
   if (is_git_url(input)) {
 
+    if (!RepoScanner::looks_like_git_repo(input)) {
+
+      std::cout << "Error: " << input << " is not a valid Git repository\n";
+
+      return;
+    }
+
     std::cout << "Cloning repository...\n";
 
     temp_repo = RepoScanner::clone(input);
