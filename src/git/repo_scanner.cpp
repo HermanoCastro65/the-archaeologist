@@ -64,4 +64,42 @@ std::string RepoScanner::repository_name(const std::string &url) {
   return name;
 }
 
+bool RepoScanner::looks_like_git_repo(const std::string &url) {
+
+  if (url.find("github.com") == std::string::npos && url.find("gitlab.com") == std::string::npos) {
+    return false;
+  }
+
+  auto parts = std::count(url.begin(), url.end(), '/');
+
+  if (parts < 4)
+    return false;
+
+  if (!url.ends_with(".git"))
+    return false;
+
+  return true;
+}
+
+bool RepoScanner::repository_exists(const std::string &url) {
+
+#ifdef _WIN32
+  std::string command = "git -c credential.helper= "
+                        "-c core.askpass= "
+                        "-c credential.interactive=false "
+                        "ls-remote " +
+                        url + " >nul 2>&1";
+#else
+  std::string command = "git -c credential.helper= "
+                        "-c core.askpass= "
+                        "-c credential.interactive=false "
+                        "ls-remote " +
+                        url + " >/dev/null 2>&1";
+#endif
+
+  int result = std::system(command.c_str());
+
+  return result == 0;
+}
+
 } // namespace archaeologist
