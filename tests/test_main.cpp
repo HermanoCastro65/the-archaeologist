@@ -11,6 +11,7 @@ void project_report_generates_summary();
 void scanner_respects_ignore_config();
 void git_repository_clone_and_cleanup();
 void git_repository_report_generates_summary();
+void tree_starts_from_repository_root();
 
 int main() {
   run_test("basic_test", basic_test);
@@ -24,6 +25,7 @@ int main() {
   run_test("scanner_respects_ignore_config", scanner_respects_ignore_config);
   run_test("git_repository_clone_and_cleanup", git_repository_clone_and_cleanup);
   run_test("git_repository_report_generates_summary", git_repository_report_generates_summary);
+  run_test("tree_starts_from_repository_root", tree_starts_from_repository_root);
 
   print_summary();
 
