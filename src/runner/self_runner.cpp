@@ -7,6 +7,7 @@
 #include "archaeologist/report/git_repository_report.h"
 #include "archaeologist/report/project_report.h"
 #include "archaeologist/scanner/directory_scanner.h"
+#include "archaeologist/search/file_finder.h"
 
 namespace archaeologist {
 
@@ -29,7 +30,6 @@ void SelfRunner::run(const std::string &input) {
     if (!RepoScanner::repository_exists(input)) {
 
       std::cout << "Error: " << input << " is not a valid Git repository\n";
-
       return;
     }
 
@@ -70,6 +70,27 @@ void SelfRunner::run(const std::string &input) {
 
   if (!temp_repo.empty()) {
     RepoScanner::cleanup(temp_repo);
+  }
+}
+
+void SelfRunner::find_file(const std::vector<std::filesystem::path> &files,
+                           const std::string &name) {
+
+  FileFinder finder;
+
+  auto results = finder.find(files, name);
+
+  if (results.empty()) {
+
+    std::cout << "File not found\n";
+    return;
+  }
+
+  for (const auto &path : results) {
+
+    std::cout << "\nFound: " << path << "\n\n";
+
+    finder.print_file_content(path);
   }
 }
 

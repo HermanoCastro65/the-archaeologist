@@ -22,6 +22,7 @@ set(ARCHAEOLOGIST_SOURCES
     src/config/ignore_config.cpp
     src/git/repo_scanner.cpp
     src/report/git_repository_report.cpp
+    src/search/file_finder.cpp
 )
 
 # ----------------------------
@@ -88,6 +89,7 @@ add_executable(archaeologist_tests
     tests/git/repository_name_test.cpp
     tests/git/git_invalid_repository_test.cpp
     tests/git/git_repository_validation_test.cpp
+    tests/search/file_finder_test.cpp
     ${ARCHAEOLOGIST_SOURCES}
 )
 
