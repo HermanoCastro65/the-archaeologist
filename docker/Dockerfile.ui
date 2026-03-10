@@ -2,7 +2,7 @@
 # Docker container to build and run The Archaeologist UI
 #
 # Build:
-# docker build -f Dockerfile.ui -t archaeologist-ui .
+# docker build -f docker/Dockerfile.ui -t archaeologist-ui .
 #
 # Run:
 # docker run -it archaeologist-ui
@@ -30,13 +30,12 @@ WORKDIR /app
 COPY . .
 
 # Fix CRLF issues from Windows
-RUN sed -i 's/\r$//' build.sh
-RUN sed -i 's/\r$//' entrypoint.sh
+RUN sed -i 's/\r$//' scripts/build.sh
+RUN sed -i 's/\r$//' scripts/entrypoint.sh
 
-RUN chmod +x build.sh
-RUN chmod +x entrypoint.sh
+RUN chmod +x scripts/build.sh
+RUN chmod +x scripts/entrypoint.sh
 
-# Build C++ engine and bindings
-RUN ./build.sh
+RUN bash scripts/build.sh
 
-CMD ["bash", "./entrypoint.sh"]
+CMD ["bash", "scripts/entrypoint.sh"]
