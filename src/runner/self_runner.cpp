@@ -45,7 +45,7 @@ void SelfRunner::run(const std::string &input) {
     git_report.print(summary);
   }
 
-  scanner.tree(files);
+  scanner.tree(files, scan_path);
 
   ProjectReport report;
   report.generate(files);
