@@ -121,21 +121,26 @@ python archaeologist_ui/main.py
 
 # Using the Interface
 
-The UI provides two buttons:
+The UI provides four buttons:
 
-*SELF RUNNER*
+| *SELF RUNNER*
 
 Scans the Archaeologist project itself.
 
-*RUN THE ARCHAEOLOGIST*
+| *RUN THE ARCHAEOLOGIST*
 
 Allows selecting any directory to scan.
 
 A project report and directory tree will appear in the terminal panel.
 
-*SCAN GIT REPO*
+| *SCAN GIT REPO*
 
 Scans a project directory or a remote Git repository.
+
+| *SEARCH FILE*
+
+After a repository scan, a search field appears below the terminal.
+Type a file name and press **Enter** to locate the file and print its contents in the terminal.
 
 ---
 
