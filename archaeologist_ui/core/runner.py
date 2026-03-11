@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -16,12 +17,18 @@ sys.path.insert(0, python_module_dir)
 import archaeologist_py  # type: ignore
 
 
+def _handle_remove_readonly(func, path, exc):
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
 class ArchaeologistRunner:
     def __init__(self):
 
         self.runner = archaeologist_py.SelfRunner()
         self.scanner = archaeologist_py.DirectoryScanner()
         self.file_finder = archaeologist_py.FileFinder()
+        self.repo_report = archaeologist_py.GitRepositoryReport()
 
         self.files = []
         self.root = None
@@ -39,6 +46,8 @@ class ArchaeologistRunner:
 
     def run(self, path):
 
+        target_display = path
+
         if path.startswith("http://") or path.startswith("https://"):
             repo_name = self._extract_repo_name(path)
 
@@ -46,7 +55,7 @@ class ArchaeologistRunner:
             clone_dir = os.path.join(tmp_root, repo_name)
 
             if os.path.exists(clone_dir):
-                shutil.rmtree(clone_dir)
+                shutil.rmtree(clone_dir, onexc=_handle_remove_readonly)
 
             subprocess.run(["git", "clone", "--depth", "1", path, clone_dir], check=True)
 
@@ -58,6 +67,20 @@ class ArchaeologistRunner:
             self.repo_dir = None
 
         self.files = self.scanner.scan(self.root)
+
+        summary = self.repo_report.analyze(self.files)
+
+        repo_name = os.path.basename(self.root)
+
+        print("Running The Archaeologist")
+        print(f"Target: {target_display}\n")
+
+        print("Repository Report")
+        print("=================\n")
+        print(f"Repository: {repo_name}")
+        print(f"Language: {summary.language}")
+        print(f"Files: {summary.files}")
+        print(f"Directories: {summary.directories}\n")
 
         self.runner.run(self.root)
 
@@ -79,5 +102,5 @@ class ArchaeologistRunner:
     def cleanup(self):
 
         if self.repo_dir and os.path.exists(self.repo_dir):
-            shutil.rmtree(self.repo_dir)
+            shutil.rmtree(self.repo_dir, onexc=_handle_remove_readonly)
             self.repo_dir = None
